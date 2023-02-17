@@ -10,7 +10,7 @@ let loading = true;
 let alreadyFound = 0;
 let polyominoes = [];
 
-
+let bestPerimeter = 100000;
 
 
 function setup() {
@@ -46,7 +46,10 @@ function draw() {
         text("New found: " + (polyominoes.length - alreadyFound), 300, 80);
 
         // Total found text
-        text("Total found: " + polyominoes.length, 300, 550);
+        text("Total found: " + polyominoes.length, 300, 530);
+
+        // Best perimeter text
+        text("Best perimeter: " + bestPerimeter, 300, 580);
 
         for (let _ = 0; _ < 1000; _++) {
             // Generate and draw polyominoes
@@ -56,6 +59,12 @@ function draw() {
             // Check if polyomino is new
             if (isNew(scaledpolyomino)) {
                 polyominoes.push(scaledpolyomino);
+
+                // Check if polyomino has smallest perimeter
+                let perimeter = get_perimeter(scaledpolyomino);
+                if (perimeter < bestPerimeter) {
+                    bestPerimeter = perimeter;
+                }
             }
         }
 
@@ -106,4 +115,12 @@ async function loadPolyominoes() {
     }
     alreadyFound = polyominoes.length;
     loading = false;
+
+    // Find smallest perimeter
+    for (let i = 0; i < polyominoes.length; i++) {
+        let perimeter = get_perimeter(polyominoes[i]);
+        if (perimeter < bestPerimeter) {
+            bestPerimeter = perimeter;
+        }
+    }
 }

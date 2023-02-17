@@ -196,3 +196,28 @@ function string_to_polyomino(string) {
     }
     return polyomino;
 }
+
+
+function get_perimeter(polyomino) {
+    let perimeter = 0;
+    for (let i = 0; i < polyomino.length; i++) {
+        for (let j = 0; j < polyomino[0].length; j++) {
+            if (polyomino[i][j]) {
+                // Check if there is a square next to it
+                if (i == 0 || !polyomino[i - 1][j]) {
+                    perimeter++;
+                }
+                if (i == polyomino.length - 1 || !polyomino[i + 1][j]) {
+                    perimeter++;
+                }
+                if (j == 0 || !polyomino[i][j - 1]) {
+                    perimeter++;
+                }
+                if (j == polyomino[0].length || !polyomino[i][j + 1]) {
+                    perimeter++;
+                }
+            }
+        }
+    }
+    return perimeter;
+}
